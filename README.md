@@ -1,1 +1,2 @@
 # InfoVisualizationFinal
+Authors: Ryan Rice
