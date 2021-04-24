@@ -33,6 +33,10 @@
         user-select: none;
       }
 
+      .select-field {
+        margin-left: 10px;
+      }
+
       @media (min-width: 768px) {
         .bd-placeholder-img-lg {
           font-size: 3.5rem;
@@ -214,20 +218,19 @@
               <circle cx="494" cy="262" r="6"></circle>
             </svg>
 
-            <select id="selectNumber">
+            <select class="select-field" id="selectNumber">
               <option>Select a chemical</option>
             </select>
-			
+
             <script type="text/javascript">
               var select = document.getElementById("selectNumber");
-              data.forEach((item) => {
+              data.forEach((item, index) => {
                 var dropdownElement = document.createElement("option");
                 dropdownElement.textContent = item[0];
-                dropdownElement.value = item[0];
+                dropdownElement.value = index;
                 select.appendChild(dropdownElement);
               });
             </script>
-
           </div>
           <h2>Section title</h2>
           <div class="table-responsive">
