@@ -31,7 +31,7 @@ var monthDict = {
 var lower_scale;
 var upper_scale;
 var circles = d3.selectAll("circle");
-
+var slider = document.getElementById("myRange");
 var chemicalTitle = document.getElementById("chemicalDisplay");
 var monthTitle = document.getElementById("monthDisplay");
 var select = document.getElementById("selectNumber");
@@ -47,7 +47,9 @@ function setScale() {
     upper_scale = d3.scale.linear()
         .domain([data[chemical][2], data[chemical][3]])
         .range(["white", "red"]);
-
+    
+    slider.max = data[chemical][4].length;
+    slider.value = 0;
     document.getElementById("upper-label").innerHTML = data[chemical][3];
     document.getElementById("middle-label").innerHTML = data[chemical][2];
     document.getElementById("lower-label").innerHTML = data[chemical][1];
@@ -166,7 +168,9 @@ document.getElementById("playButton").onclick = async function () {
         if (isPlaying == false) {
             break;
         }
+        i = month;
         month++;
+        slider.value = month;
         updateColor();
         await sleep(waitTime);
         updateButtons();
@@ -176,7 +180,15 @@ document.getElementById("playButton").onclick = async function () {
 //pasues play
 document.getElementById("pauseButton").onclick = function () {
     isPlaying = false;
+    slider.disabled = false;
     updateButtons();
     enablePlayButton();
     disablePauseButton();
 }
+
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function() {
+  month = this.value;
+  updateColor();
+}
+
