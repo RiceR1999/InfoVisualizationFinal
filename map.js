@@ -85,6 +85,12 @@ function updateNextLast(disabled) {
     lastMonthButton.disabled = disabled;
 }
 
+function updatePlayButtonForSlider() {
+    if (month !== lastMonthIndex) {
+        enablePlayButton();
+    }
+}
+
 function updateButtons() {
     if (month == 0) {
         updateFirstPrevious(true);
@@ -201,5 +207,5 @@ document.getElementById("pauseButton").onclick = function () {
 slider.oninput = function () {
     month = Number(this.value);
     updateColorAndButtons();
+    updatePlayButtonForSlider();
 }
-
