@@ -7,6 +7,10 @@ var lower_scale;
 var upper_scale;
 var circles = d3.selectAll("circle");
 
+var chemicalTitle = document.getElementById("chemicalDisplay");
+var monthTitle = document.getElementById("monthDisplay");
+var select = document.getElementById("selectNumber");
+
 setScale();
 updateColor();
 
@@ -22,6 +26,7 @@ function setScale() {
     document.getElementById("upper-label").innerHTML = data[chemical][3];
     document.getElementById("middle-label").innerHTML = data[chemical][2];
     document.getElementById("lower-label").innerHTML = data[chemical][1];
+    chemicalTitle.innerHTML = `Chemical: ${data[chemical][0]}`;
 }
 
 // Updates colors of circles, using color_scale, and dataset for chemical and month.
@@ -38,20 +43,17 @@ function updateColor() {
                 return upper_scale(d);
             }
         });
+    monthTitle.innerHTML = `Month: ${data[chemical][4][month][0]}`;
     console.log(data[chemical][4][month][2]);
 }
 
 // Updates circles and scaling after changing value of select field
-var chemicalTitle = document.getElementById("chemicalDisplay");
-var monthTitle = document.getElementById("monthDisplay");
-var select = document.getElementById("selectNumber");
+
 select.onchange = function () {
     chemical = select.value;
     setScale();
     month = 0;
     updateColor();
-    chemicalTitle.innerHTML = `Chemical: ${data[chemical][0]}`;
-    monthTitle.innerHTML = `Month: ${data[chemical][4][month][0]}`;
 }
 
 // Temporary until slider is added
