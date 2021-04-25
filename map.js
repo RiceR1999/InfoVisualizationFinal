@@ -1,6 +1,7 @@
 // Keeps track of where in the data we are
 var chemical = 0;
 var month = 0;
+var isPlaying = false;
 var lastMonthIndex = data[chemical][4].length - 1;
 var firstMonthButton = document.getElementById("first_month");
 var previousMonthButton = document.getElementById("previous_month");
@@ -41,14 +42,15 @@ updateColor();
 
 // Resets color scale using month and chemical values
 function setScale() {
+    isPlaying = false;
     lower_scale = d3.scale.linear()
         .domain([data[chemical][1], data[chemical][2]])
         .range(["blue", "white"]);
     upper_scale = d3.scale.linear()
         .domain([data[chemical][2], data[chemical][3]])
         .range(["white", "red"]);
-    
-    slider.max = data[chemical][4].length;
+
+    slider.max = lastMonthIndex;
     slider.value = 0;
     document.getElementById("upper-label").innerHTML = data[chemical][3];
     document.getElementById("middle-label").innerHTML = data[chemical][2];
@@ -71,7 +73,6 @@ function updateColor() {
             }
         });
     monthTitle.innerHTML = `Date: ${monthDict[data[chemical][4][month][0]]}, ${data[chemical][4][month][1]}`;
-    console.log(data[chemical][4][month][2]);
 }
 
 function updateFirstPrevious(disabled) {
@@ -88,6 +89,7 @@ function updateButtons() {
     if (month == 0) {
         updateFirstPrevious(true);
         updateNextLast(false);
+        enablePlayButton();
     } else if (month == lastMonthIndex) {
         updateFirstPrevious(false);
         updateNextLast(true);
@@ -101,6 +103,10 @@ function updateButtons() {
 
 function enablePlayButton() {
     document.getElementById("playButton").disabled = false;
+}
+
+function enablePauseButton() {
+    document.getElementById("pauseButton").disabled = false;
 }
 
 function disablePlayButton() {
@@ -122,11 +128,14 @@ select.onchange = function () {
     setScale();
     month = 0;
     updateColorAndButtons();
+    enablePlayButton();
+    disablePauseButton();
 }
 
 // Display data for first month
 firstMonthButton.onclick = function () {
     month = 0;
+    slider.value = month;
     updateColorAndButtons();
     enablePlayButton();
 }
@@ -134,6 +143,7 @@ firstMonthButton.onclick = function () {
 // Display data for previous month
 previousMonthButton.onclick = function () {
     month -= 1;
+    slider.value = month;
     updateColorAndButtons();
     enablePlayButton();
 }
@@ -141,12 +151,14 @@ previousMonthButton.onclick = function () {
 // Display data for next month
 nextMonthButton.onclick = function () {
     month += 1;
+    slider.value = month;
     updateColorAndButtons();
 }
 
 // Display data for last month
 lastMonthButton.onclick = function () {
     month = lastMonthIndex;
+    slider.value = month;
     updateColorAndButtons();
 }
 
@@ -156,10 +168,9 @@ const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
 
 
 //increments the months every 1/4 second
-var isPlaying = false;
 document.getElementById("playButton").onclick = async function () {
-    document.getElementById("playButton").disabled = true;
-    document.getElementById("pauseButton").disabled = false;
+    disablePlayButton();
+    enablePauseButton();
     isPlaying = true;
     var waitTime = 250;
     var maxMonths = data[chemical][4].length;
@@ -187,8 +198,8 @@ document.getElementById("pauseButton").onclick = function () {
 }
 
 // Update the current slider value (each time you drag the slider handle)
-slider.oninput = function() {
-  month = this.value;
-  updateColor();
+slider.oninput = function () {
+    month = Number(this.value);
+    updateColorAndButtons();
 }
 
