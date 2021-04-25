@@ -18,7 +18,10 @@ function setScale() {
     upper_scale = d3.scale.linear()
         .domain([data[chemical][2], data[chemical][3]])
         .range(["white", "red"]);
-        
+
+    document.getElementById("upper-label").innerHTML = data[chemical][3];
+    document.getElementById("middle-label").innerHTML = data[chemical][2];
+    document.getElementById("lower-label").innerHTML = data[chemical][1];
 }
 
 // Updates colors of circles, using color_scale, and dataset for chemical and month.
