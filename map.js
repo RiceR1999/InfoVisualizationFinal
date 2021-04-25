@@ -2,6 +2,22 @@
 var chemical = 0;
 var month = 0;
 
+//converts number into according month for display
+var monthDict = {
+    1:"January",
+    2:"February",
+    3:"March",
+    4:"April",
+    5:"May",
+    6:"June",
+    7:"July",
+    8:"August",
+    9:"September",
+    10:"October",
+    11:"November",
+    12:"December"
+}
+
 // D3 color scale to set color of symbols
 var lower_scale;
 var upper_scale;
@@ -43,7 +59,7 @@ function updateColor() {
                 return upper_scale(d);
             }
         });
-    monthTitle.innerHTML = `Date: ${data[chemical][4][month][0]}`;
+    monthTitle.innerHTML = monthDict[data[chemical][4][month][0]] + ", " +data[chemical][4][month][1];
     console.log(data[chemical][4][month][2]);
 }
 
@@ -60,4 +76,31 @@ select.onchange = function () {
 document.getElementById("next_month").onclick = function () {
     month += 1;
     updateColor();
+}
+
+//causes a delay for specified amount of ms
+const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+
+
+
+//increments the months every 1/4 second
+var isPlaying = false;
+document.getElementById("playButton").onclick = async function () {
+    isPlaying = true;
+    var waitTime = 250;
+    var maxMonths = data[chemical][4].length;
+    
+    for(i = month; i < maxMonths; i++){
+        if(isPlaying==false){
+            break;
+        }
+        month++;
+        updateColor();
+        await sleep(waitTime);
+    }
+}
+
+//pasues play
+document.getElementById("pauseButton").onclick = function () {
+    isPlaying = false;
 }
