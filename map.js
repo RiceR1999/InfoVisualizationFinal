@@ -61,3 +61,45 @@ document.getElementById("next_month").onclick = function () {
     month += 1;
     updateColor();
 }
+
+//causes a delay for specified amount of ms
+const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+
+//converts number into according month for display
+var monthDict = {
+    1:"January",
+    2:"February",
+    3:"March",
+    4:"April",
+    5:"May",
+    6:"June",
+    7:"July",
+    8:"August",
+    9:"September",
+    10:"October",
+    11:"November",
+    12:"December"
+}
+
+//increments the months every 1/4 second
+var isPlaying = false;
+document.getElementById("playButton").onclick = async function () {
+    isPlaying = true;
+    var waitTime = 250;
+    var maxMonths = data[chemical][4].length;
+    
+    for(i = month; i < maxMonths; i++){
+        if(isPlaying==false){
+            break;
+        }
+        month++;
+        document.getElementById("monthTracker").innerText = monthDict[data[chemical][4][i][0]] + ", " +data[chemical][4][i][1];
+        updateColor();
+        await sleep(waitTime);
+    }
+}
+
+//pasues play
+document.getElementById("pauseButton").onclick = function () {
+    isPlaying = false;
+}
