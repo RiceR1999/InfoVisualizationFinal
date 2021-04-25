@@ -42,6 +42,7 @@ updateColor();
 
 // Resets color scale using month and chemical values
 function setScale() {
+    lastMonthIndex = data[chemical][4].length - 1;
     isPlaying = false;
     lower_scale = d3.scale.linear()
         .domain([data[chemical][1], data[chemical][2]])
