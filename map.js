@@ -3,7 +3,8 @@ var chemical = 0;
 var month = 0;
 
 // D3 color scale to set color of symbols
-var color_scale;
+var lower_scale;
+var upper_scale;
 var circles = d3.selectAll("circle");
 
 setScale();
@@ -11,20 +12,27 @@ updateColor();
 
 // Resets color scale using month and chemical values
 function setScale() {
-    color_scale = d3.scale.linear()
+    lower_scale = d3.scale.linear()
         .domain([data[chemical][1], data[chemical][2]])
-        .range(["red", "blue"]);
+        .range(["blue", "white"]);
+    upper_scale = d3.scale.linear()
+        .domain([data[chemical][2], data[chemical][3]])
+        .range(["white", "red"]);
+        
 }
 
 // Updates colors of circles, using color_scale, and dataset for chemical and month.
 function updateColor() {
-    circles.data(data[chemical][3][month][2])
+    circles.data(data[chemical][4][month][2])
         .attr("fill", function (d) {
             if (d == -1) {
-                return "black"
+                return "black";
+            }
+            else if (d < data[chemical][2]){
+                return lower_scale(d);
             }
             else {
-                return color_scale(d)
+                return upper_scale(d);
             }
         });
 }
