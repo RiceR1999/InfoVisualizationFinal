@@ -31,7 +31,7 @@ function updateColor() {
             if (d == -1) {
                 return "black";
             }
-            else if (d < data[chemical][2]){
+            else if (d < data[chemical][2]) {
                 return lower_scale(d);
             }
             else {
@@ -42,11 +42,16 @@ function updateColor() {
 }
 
 // Updates circles and scaling after changing value of select field
-document.getElementById("selectNumber").onchange = function () {
-    chemical = document.getElementById("selectNumber").value;
+var chemicalTitle = document.getElementById("chemicalDisplay");
+var monthTitle = document.getElementById("monthDisplay");
+var select = document.getElementById("selectNumber");
+select.onchange = function () {
+    chemical = select.value;
     setScale();
     month = 0;
     updateColor();
+    chemicalTitle.innerHTML = `Chemical: ${data[chemical][0]}`;
+    monthTitle.innerHTML = `Month: ${data[chemical][4][month][0]}`;
 }
 
 // Temporary until slider is added
