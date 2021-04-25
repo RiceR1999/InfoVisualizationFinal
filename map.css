@@ -14,11 +14,11 @@
 }
 
 #upper-scale {
-	background-image: linear-gradient(red, white);
+	background-image: linear-gradient(red, #ffdddd);
 }
 
 #lower-scale {
-	background-image: linear-gradient(white, blue);
+	background-image: linear-gradient(blue, #ddddff);
 }
 
 svg {
