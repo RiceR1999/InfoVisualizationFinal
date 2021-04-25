@@ -56,6 +56,7 @@ function setScale() {
     document.getElementById("middle-label").innerHTML = data[chemical][2];
     document.getElementById("lower-label").innerHTML = data[chemical][1];
     chemicalTitle.innerHTML = `Chemical: ${data[chemical][0]}`;
+    document.getElementById("unit-display").innerHTML = `Average Monthly Reading (${getUnitOfMeasure(chemical)})`;
 }
 
 // Updates colors of circles, using color_scale, and dataset for chemical and month.
@@ -208,4 +209,12 @@ slider.oninput = function () {
     month = Number(this.value);
     updateColorAndButtons();
     updatePlayButtonForSlider();
+}
+
+function getUnitOfMeasure(index) {
+    if(index < 3) {
+        return "µg/l";
+    } else {
+        return "mg/l";
+    }
 }
