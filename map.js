@@ -35,6 +35,7 @@ function updateColor() {
                 return upper_scale(d);
             }
         });
+    console.log(data[chemical][4][month][2]);
 }
 
 // Updates circles and scaling after changing value of select field
@@ -42,5 +43,11 @@ document.getElementById("selectNumber").onchange = function () {
     chemical = document.getElementById("selectNumber").value;
     setScale();
     month = 0;
+    updateColor();
+}
+
+// Temporary until slider is added
+document.getElementById("next_month").onclick = function () {
+    month += 1;
     updateColor();
 }
