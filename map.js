@@ -1,21 +1,30 @@
 // Keeps track of where in the data we are
 var chemical = 0;
 var month = 0;
+var lastMonthIndex = data[chemical][4].length - 1;
+var firstMonthButton = document.getElementById("first_month");
+var previousMonthButton = document.getElementById("previous_month");
+var nextMonthButton = document.getElementById("next_month");
+var lastMonthButton = document.getElementById("last_month");
+
+// disables buttons for first month, previous month and pause when page loads
+updateFirstPrevious(true);
+disablePauseButton();
 
 //converts number into according month for display
 var monthDict = {
-    1:"January",
-    2:"February",
-    3:"March",
-    4:"April",
-    5:"May",
-    6:"June",
-    7:"July",
-    8:"August",
-    9:"September",
-    10:"October",
-    11:"November",
-    12:"December"
+    1: "January",
+    2: "February",
+    3: "March",
+    4: "April",
+    5: "May",
+    6: "June",
+    7: "July",
+    8: "August",
+    9: "September",
+    10: "October",
+    11: "November",
+    12: "December"
 }
 
 // D3 color scale to set color of symbols
@@ -63,37 +72,80 @@ function updateColor() {
     console.log(data[chemical][4][month][2]);
 }
 
-// Updates circles and scaling after changing value of select field
+function updateFirstPrevious(disabled) {
+    firstMonthButton.disabled = disabled;
+    previousMonthButton.disabled = disabled;
+}
 
+function updateNextLast(disabled) {
+    nextMonthButton.disabled = disabled;
+    lastMonthButton.disabled = disabled;
+}
+
+function updateButtons() {
+    if (month == 0) {
+        updateFirstPrevious(true);
+        updateNextLast(false);
+    } else if (month == lastMonthIndex) {
+        updateFirstPrevious(false);
+        updateNextLast(true);
+        disablePlayButton();
+        disablePauseButton();
+    } else {
+        updateFirstPrevious(false);
+        updateNextLast(false);
+    }
+}
+
+function enablePlayButton() {
+    document.getElementById("playButton").disabled = false;
+}
+
+function disablePlayButton() {
+    document.getElementById("playButton").disabled = true;
+}
+
+function disablePauseButton() {
+    document.getElementById("pauseButton").disabled = true;
+}
+
+function updateColorAndButtons() {
+    updateColor();
+    updateButtons();
+}
+
+// Updates circles and scaling after changing value of select field
 select.onchange = function () {
     chemical = select.value;
     setScale();
     month = 0;
-    updateColor();
+    updateColorAndButtons();
 }
 
 // Display data for first month
-document.getElementById("first_month").onclick = function () {
+firstMonthButton.onclick = function () {
     month = 0;
-    updateColor();
+    updateColorAndButtons();
+    enablePlayButton();
 }
 
 // Display data for previous month
-document.getElementById("previous_month").onclick = function () {
+previousMonthButton.onclick = function () {
     month -= 1;
-    updateColor();
+    updateColorAndButtons();
+    enablePlayButton();
 }
 
 // Display data for next month
-document.getElementById("next_month").onclick = function () {
+nextMonthButton.onclick = function () {
     month += 1;
-    updateColor();
+    updateColorAndButtons();
 }
 
 // Display data for last month
-document.getElementById("last_month").onclick = function () {
-    month = data[chemical][4].length - 1;
-    updateColor();
+lastMonthButton.onclick = function () {
+    month = lastMonthIndex;
+    updateColorAndButtons();
 }
 
 //causes a delay for specified amount of ms
@@ -104,21 +156,27 @@ const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
 //increments the months every 1/4 second
 var isPlaying = false;
 document.getElementById("playButton").onclick = async function () {
+    document.getElementById("playButton").disabled = true;
+    document.getElementById("pauseButton").disabled = false;
     isPlaying = true;
     var waitTime = 250;
     var maxMonths = data[chemical][4].length;
-    
-    for(i = month; i < maxMonths; i++){
-        if(isPlaying==false){
+
+    for (i = month; i < maxMonths; i++) {
+        if (isPlaying == false) {
             break;
         }
         month++;
         updateColor();
         await sleep(waitTime);
+        updateButtons();
     }
 }
 
 //pasues play
 document.getElementById("pauseButton").onclick = function () {
     isPlaying = false;
+    updateButtons();
+    enablePlayButton();
+    disablePauseButton();
 }
