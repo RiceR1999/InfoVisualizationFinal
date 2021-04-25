@@ -72,9 +72,27 @@ select.onchange = function () {
     updateColor();
 }
 
-// Temporary until slider is added
+// Display data for first month
+document.getElementById("first_month").onclick = function () {
+    month = 0;
+    updateColor();
+}
+
+// Display data for previous month
+document.getElementById("previous_month").onclick = function () {
+    month -= 1;
+    updateColor();
+}
+
+// Display data for next month
 document.getElementById("next_month").onclick = function () {
     month += 1;
+    updateColor();
+}
+
+// Display data for last month
+document.getElementById("last_month").onclick = function () {
+    month = data[chemical][4].length - 1;
     updateColor();
 }
 
