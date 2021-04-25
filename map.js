@@ -43,7 +43,7 @@ function updateColor() {
                 return upper_scale(d);
             }
         });
-    monthTitle.innerHTML = `Month: ${data[chemical][4][month][0]}`;
+    monthTitle.innerHTML = `Date: ${data[chemical][4][month][0]}`;
     console.log(data[chemical][4][month][2]);
 }
 
