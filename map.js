@@ -45,10 +45,10 @@ function setScale() {
     isPlaying = false;
     lower_scale = d3.scale.linear()
         .domain([data[chemical][1], data[chemical][2]])
-        .range(["blue", "white"]);
+        .range(["#ddddff", "blue"]);
     upper_scale = d3.scale.linear()
         .domain([data[chemical][2], data[chemical][3]])
-        .range(["white", "red"]);
+        .range(["#ffdddd", "red"]);
 
     slider.max = lastMonthIndex;
     slider.value = 0;
