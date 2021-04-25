@@ -6,26 +6,27 @@ var month = 0;
 var color_scale;
 var circles = d3.selectAll("circle");
 
+setScale();
+updateColor();
+
 // Resets color scale using month and chemical values
 function setScale() {
     color_scale = d3.scale.linear()
-        .domain(data[chemical][1], data[chemical][2])
-        .range("red", "blue");
+        .domain([data[chemical][1], data[chemical][2]])
+        .range(["red", "blue"]);
 }
 
 // Updates colors of circles, using color_scale, and dataset for chemical and month.
 function updateColor() {
-    circles.data(data)
-        .enter()
-        .append("circle")
+    circles.data(data[chemical][3][month][2])
         .attr("fill", function (d) {
-            if (d[chemical][3][month][2][0] == -1) {
+            if (d == -1) {
                 return "black"
             }
             else {
-                return color_scale(d[chemical][3][month][2][0])
+                return color_scale(d)
             }
-        })
+        });
 }
 
 // Updates circles and scaling after changing value of select field
