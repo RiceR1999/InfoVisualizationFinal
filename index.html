@@ -11,6 +11,7 @@
     <meta name="generator" content="Hugo 0.82.0" />
     <script type="text/javascript" src="d3/d3.v3.js"></script>
     <script type="text/javascript" src="selected-data.js"></script>
+    <link rel="stylesheet" href="map.css"/>
     <title>2018 MC2 Dashboard</title>
 
     <link
@@ -61,41 +62,65 @@
             <h1 class="h2" id="monthDisplay">Month:</h1>
           </div>
           <div>
-            <!-- map overlay -->
-            <svg
-              id="map"
-              width="628"
-              height="628"
-              style="
-                background-image: url(img/waterwaysMap.jpg);
-                background-size: cover;
-              "
-            >
-              <!-- Achara -->
-              <circle cx="255" cy="204" r="6"></circle>
-              <!-- Boonsri -->
-              <circle cx="344" cy="94" r="6"></circle>
-              <!-- Busarakhan -->
-              <circle cx="494" cy="262" r="6"></circle>
-              <!-- Chai -->
-              <circle cx="401" cy="308" r="6"></circle>
-              <!-- Decha -->
-              <circle cx="47" cy="386" r="6"></circle>
-              <!-- Kannika -->
-              <circle cx="437" cy="478" r="6"></circle>
-              <!-- Kohsoom -->
-              <circle cx="496" cy="188" r="6"></circle>
-              <!-- Sakda -->
-              <circle cx="341" cy="590" r="6"></circle>
-              <!-- Somchair -->
-              <circle cx="190" cy="289" r="6"></circle>
-              <!-- Tansanee -->
-              <circle cx="188" cy="457" r="6"></circle>
-            </svg>
+            <div id="map-row">
+
+              <!-- map overlay -->
+              <svg
+                  id="map"
+                  width="628"
+                  height="628"
+                  style="
+                    background-image: url(img/waterwaysMap.jpg);
+                    background-size: cover;
+                  "
+              >
+                <!-- Achara -->
+                <circle cx="255" cy="204" r="6"></circle>
+                <!-- Boonsri -->
+                <circle cx="344" cy="94" r="6"></circle>
+                <!-- Busarakhan -->
+                <circle cx="494" cy="262" r="6"></circle>
+                <!-- Chai -->
+                <circle cx="401" cy="308" r="6"></circle>
+                <!-- Decha -->
+                <circle cx="47" cy="386" r="6"></circle>
+                <!-- Kannika -->
+                <circle cx="437" cy="478" r="6"></circle>
+                <!-- Kohsoom -->
+                <circle cx="496" cy="188" r="6"></circle>
+                <!-- Sakda -->
+                <circle cx="341" cy="590" r="6"></circle>
+                <!-- Somchair -->
+                <circle cx="190" cy="289" r="6"></circle>
+                <!-- Tansanee -->
+                <circle cx="188" cy="457" r="6"></circle>
+              </svg>
+
+              <div id="scale">
+                <div id="color-scales">
+                  <div class="scale" id="upper-scale">
+
+                  </div>
+                  <div class="scale" id="lower-scale">
+
+                  </div>
+                </div>
+                <div id="scale-labels">
+                  <h4 class="scale-label" id="upper-label">100</h4>
+                  <h4 class="scale-label" id="middle-label">.1</h4>
+                  <h4 class="scale-label" id="lower-label">0</h4>
+                </div>
+                <div id="scale-heading">
+                  <h3>Average Monthly Reading</h3>
+                </div>
+              </div>
+            </div>
 
             <select class="select-field" id="selectNumber">
-              <option>Select a chemical</option>
             </select>
+
+            <!-- Temporary until slider is added -->
+            <button id="next_month">Next Month</button>
 
             <script type="text/javascript">
               var select = document.getElementById("selectNumber");

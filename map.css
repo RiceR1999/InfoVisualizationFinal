@@ -1,0 +1,45 @@
+#scale {
+	margin-left: 650px;
+	height: 628px;
+}
+
+.scale {
+	width: 50px;
+	height: 314px;
+}
+
+#color-scales {
+	width:50px;
+	float:left;
+}
+
+#upper-scale {
+	background-image: linear-gradient(red, white);
+}
+
+#lower-scale {
+	background-image: linear-gradient(white, blue);
+}
+
+svg {
+	float: left;
+}
+
+#scale-labels {
+	margin-left: 10px;
+	width: 100px;
+	height: 628px;
+	float:left;
+}
+
+.scale-label {
+	margin-bottom: 270px;
+}
+
+#scale-heading {
+	padding-top: 275px;
+	float: left;
+	height: 628px;
+	width: 250px;
+	text-align: center;
+}
